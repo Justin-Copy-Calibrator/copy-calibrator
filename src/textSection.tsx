@@ -1,15 +1,16 @@
+import React from 'react';
 import { useEffect, useState } from 'react';
-import { getVariant, tagInGoogleAnalytics } from './utils.ts';
+import { getVariant, tagInGoogleAnalytics } from './utils';
 
 interface TextSectionProps {
   sectionId: string;
   defaultValue: string;
 }
 
-export function TextSection({
+export const TextSection: React.FC<TextSectionProps> = ({
   sectionId,
   defaultValue,
-}: TextSectionProps): string {
+}: TextSectionProps) => {
   const [text, setText] = useState('');
 
   useEffect(() => {
@@ -33,5 +34,6 @@ export function TextSection({
       .catch(() => {})
       .finally(() => {});
   }, []);
-  return text;
-}
+
+  return <>{text}</>;
+};

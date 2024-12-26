@@ -1,6 +1,6 @@
 export const getVariant = async (sectionId: string) => {
   const response = await fetch(
-    `https://copycalibrator.com/api/getVariant/${sectionId}`,
+    `https://copycalibrator.com/api/experiment?section_id=${sectionId}`,
     {
       method: 'GET',
     },
@@ -36,7 +36,7 @@ export const tagInGoogleAnalytics = ({
   if (!hasCookie) {
     console.log('Cookie not set, setting: ', expVariantString);
 
-    fetch('/api/calibrator', {
+    fetch('/api/experiment', {
       method: 'POST',
       headers: {
         Accept: 'application/json',
