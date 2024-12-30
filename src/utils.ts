@@ -1,6 +1,6 @@
 export const getVariant = async (sectionId: string) => {
   const response = await fetch(
-    `https://copycalibrator.com/api/experiment?section_id=${sectionId}`,
+    `https://copycalibrator.com/api/experiment/${sectionId}`,
     {
       method: 'GET',
     },
@@ -12,16 +12,16 @@ export const getVariant = async (sectionId: string) => {
 };
 
 interface tagInGoogleAnalyticsProps {
-  variantId: string;
-  experimentId: string;
+  variant: { id: string };
+  experiment: { id: string };
   hasCookie: boolean;
 }
 export const tagInGoogleAnalytics = ({
-  variantId,
-  experimentId,
+  variant,
+  experiment,
   hasCookie,
 }: tagInGoogleAnalyticsProps) => {
-  const expVariantString = `CLBRTR-${experimentId}-${variantId}`;
+  const expVariantString = `CLBRTR-${experiment.id}-${variant.id}`;
 
   if (window?.gtag === undefined) {
     console.log(
@@ -32,19 +32,4 @@ export const tagInGoogleAnalytics = ({
   window?.gtag('event', 'experience_impression', {
     exp_variant_string: expVariantString,
   });
-
-  if (!hasCookie) {
-    console.log('Cookie not set, setting: ', expVariantString);
-
-    fetch('/api/experiment', {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ experimentId, variantId, expVariantString }),
-    }).then(() => {
-      console.log('cookie logged POST');
-    });
-  }
 };

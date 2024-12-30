@@ -14,11 +14,12 @@ export const TextSection: React.FC<TextSectionProps> = ({
   const [text, setText] = useState('');
 
   useEffect(() => {
+    // TODO if cookie then get the variant directly
     getVariant(sectionId)
       .then(({ experiment, variant, hasCookie }) => {
         tagInGoogleAnalytics({
-          variantId: variant.id,
-          experimentId: experiment.id,
+          variant,
+          experiment,
           hasCookie,
         });
 
@@ -31,7 +32,9 @@ export const TextSection: React.FC<TextSectionProps> = ({
         }
         setText(variant.text);
       })
-      .catch(() => {})
+      .catch(() => {
+        setText(defaultValue);
+      })
       .finally(() => {});
   }, []);
 

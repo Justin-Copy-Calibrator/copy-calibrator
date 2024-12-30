@@ -1,6 +1,6 @@
 {
   "name": "copy-calibrator",
-  "version": "1.0.9",
+  "version": "1.0.13",
   "description": "Integrate A/B testing into your project with CopyCalibrator.com",
   "author": "Justin-Copy-Calibrator",
   "license": "MIT",
